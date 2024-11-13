@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Manager Assignment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #00b388;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            background-color: #00b388;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #007a5e;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #e0f7fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Delivery Manager Assignment</h1>
+        <form id="assignmentForm">
+            <label for="account">Account</label>
+            <input type="text" id="account" name="account" required>
+
+            <label for="country">Account Country</label>
+            <select id="country" name="country" required>
+                <option value="Switzerland">Switzerland</option>
+                <option value="Austria">Austria</option>
+                <option value="Germany">Germany</option>
+            </select>
+
+            <label>Greenlake / OS</label>
+            <input type="radio" id="greenlakeYes" name="greenlake" value="yes" required>
+            <label for="greenlakeYes">Yes</label>
+            <input type="radio" id="greenlakeNo" name="greenlake" value="no" required>
+            <label for="greenlakeNo">No</label>
+
+            <label>Managed Services</label>
+            <input type="radio" id="managedYes" name="managed" value="yes" required>
+            <label for="managedYes">Yes</label>
+            <input type="radio" id="managedNo" name="managed" value="no" required>
+            <label for="managedNo">No</label>
+
+            <label>A&PS</label>
+            <input type="radio" id="apsYes" name="aps" value="yes" required>
+            <label for="apsYes">Yes</label>
+            <input type="radio" id="apsNo" name="aps" value="no" required>
+            <label for="apsNo">No</label>
+
+            <div id="germanyFields" style="display: none;">
+                <label for="plz">PLZ (shipping address)</label>
+                <input type="number" id="plz" name="plz">
+
+                <label>Top Account</label>
+                <input type="radio" id="topAccountYes" name="topAccount" value="yes">
+                <label for="topAccountYes">Yes</label>
+                <input type="radio" id="topAccountNo" name="topAccount" value="no">
+                <label for="topAccountNo">No</label>
+
+                <label>Segment automotive?</label>
+                <input type="radio" id="automotiveYes" name="automotive" value="yes">
+                <label for="automotiveYes">Yes</label>
+                <input type="radio" id="automotiveNo" name="automotive" value="no">
+                <label for="automotiveNo">No</label>
+
+                <label>Contains the deal SAP solution?</label>
+                <input type="radio" id="sapYes" name="sap" value="yes">
+                <label for="sapYes">Yes</label>
+                <input type="radio" id="sapNo" name="sap" value="no">
+                <label for="sapNo">No</label>
+
+                <label>Pure Colo or only PM services?</label>
+                <input type="radio" id="coloYes" name="colo" value="yes">
+                <label for="coloYes">Yes</label>
+                <input type="radio" id="coloNo" name="colo" value="no">
+                <label for="coloNo">No</label>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        document.getElementById('country').addEventListener('change', function() {
+            if (this.value === 'Germany') {
+                document.getElementById('germanyFields').style.display = 'block';
+            } else {
+                document.getElementById('germanyFields').style.display = 'none';
+            }
+        });
+
+        document.getElementById('assignmentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const country = form.country.value;
+            const greenlake = form.greenlake.value === 'yes';
+            const aps = form.aps.value === 'yes';
+            const plz = form.plz.value ? parseInt(form.plz.value) : null;
+            const topAccount = form.topAccount.value === 'yes';
+            const automotive = form.automotive.value === 'yes';
+            const sap = form.sap.value === 'yes';
+            const colo = form.colo.value === 'yes';
+
+            let managers = [];
+
+            if (country === 'Switzerland') {
+                if (greenlake) {
+                    managers = ['Stefan Gisler', 'Mario Grande'];
+                } else if (aps) {
+                    managers = ['Ramtin Razzaghinejad'];
+                }
+            } else if (country === 'Austria') {
+                if (greenlake) {
+                    managers = ['Rudolf Mueller', 'Ernst Krammer'];
+                } else if (aps) {
+                    managers = ['Gerald Six'];
+                }
+            } else if (country === 'Germany') {
+                if (greenlake) {
+                    if (plz >= 0 && plz <= 38999 || plz >= 49000 && plz <= 49999 || plz >= 54000 && plz <= 56999 || plz >= 60000 && plz <= 65999 || plz >= 98000 && plz <= 99999) {
+                        managers.push('Steffi Dollase');
+                    } else if (plz >= 40000 && plz <= 48999 || plz >= 50000 && plz <= 53999 || plz >= 57000 && plz <= 59999) {
+                        managers.push('Sabine Warta');
+                    } else if (plz >= 66000 && plz <= 69999 || plz >= 70000 && plz <= 79999 || plz >= 80000 && plz <= 89999 || plz >= 90000 && plz <= 97999) {
+                        managers.push('Alexander Butter');
+                    }
+                } else if (aps) {
+                    if (plz >= 0 && plz <= 38999 || plz >= 49000 && plz <= 49999 || plz >= 54000 && plz <= 56999 || plz >= 60000 && plz <= 65999 || plz >= 98000 && plz <= 99999) {
+                        managers.push('Markus Trojahn');
+                    } else if (plz >= 40000 && plz <= 48999 || plz >= 50000 && plz <= 53999 || plz >= 57000 && plz <= 59999) {
+                        managers.push('Ina Heger');
+                    } else if (plz >= 66000 && plz <= 69999 || plz >= 70000 && plz <= 79999 || plz >= 80000 && plz <= 89999 || plz >= 90000 && plz <= 97999) {
+                        managers.push('Patrick Neff');
+                    }
+                }
+                if (topAccount) {
+                    managers.push('Robbert Moeller');
+                }
+                if (aps && automotive) {
+                    managers.push('Markus Depolt');
+                }
+                if (sap) {
+                    managers.push('Patrick Neff');
+                }
+                if (colo) {
+                    managers.push('Alina/Gerald');
+                }
+            }
+
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').innerHTML = 'Assigned Delivery Managers: ' + managers.join(', ');
+        });
+    </script>
+</body>
+</html>
