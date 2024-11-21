@@ -83,6 +83,13 @@
                 <option value="Switzerland">Switzerland</option>
                 <option value="Austria">Austria</option>
                 <option value="Germany">Germany</option>
+                <option value="Poland">Poland</option>
+                <option value="Hungary">Hungary</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Czech Republic">Czech Republic</option>
+                <option value="Slovakia">Slovakia</option>
+                <option value="Romania">Romania</option>
+                
             </select>
 
             <div class="radio-group">
@@ -167,20 +174,29 @@
     </div>
 
     <script>
-        document.getElementById('country').addEventListener('change', function() {
-            document.getElementById('germanyFields').style.display = this.value === 'Germany' ? 'block' : 'none';
-        });
 
-        document.getElementById('country').addEventListener('change', function () {
-    if (this.value === 'Germany') {
-        document.getElementById('germanyFields').style.display = 'block';
-    } else {
-        document.getElementById('germanyFields').style.display = 'none';
+function toggleGermanyFields() {
+        const country = document.getElementById('country').value;
+        const germanyFields = document.getElementById('germanyFields');
+
+        // Show or hide the fields based on the selected country
+        if (country === 'Germany') {
+            germanyFields.style.display = 'block';
+        } else {
+            germanyFields.style.display = 'none';
+        }
     }
-});
 
-document.getElementById('assignmentForm').addEventListener('submit', function (event) {
-    event.preventDefault();
+    // Add event listener to the country dropdown
+    document.getElementById('country').addEventListener('change', toggleGermanyFields);
+
+    // Initial check on page load
+    document.addEventListener('DOMContentLoaded', toggleGermanyFields);
+
+       document.getElementById('assignmentForm').addEventListener('submit', function (event) {
+    event.preventDefault();  // Prevent default form submission behavior
+
+    // Collect form data
     const form = event.target;
     const account = form.account.value.trim();
     const country = form.country.value;
@@ -193,6 +209,7 @@ document.getElementById('assignmentForm').addEventListener('submit', function (e
     const sap = form.sap?.value === 'yes';
     const colo = form.colo?.value === 'yes';
 
+    // Validate that required fields are filled
     if (!account) {
         alert('Please enter an account name.');
         return;
@@ -200,6 +217,7 @@ document.getElementById('assignmentForm').addEventListener('submit', function (e
 
     let managers = [];
 
+    // Logic for assigning managers based on country and form inputs
     if (country === 'Switzerland') {
         if (greenlake) {
             managers = ['Stefan Gisler', 'Mario Grande'];
@@ -212,6 +230,18 @@ document.getElementById('assignmentForm').addEventListener('submit', function (e
         } else if (aps) {
             managers = ['Gerald Six'];
         }
+    } else if (country === 'Poland') {
+          managers = ['Izabella Skobudzinska'];
+    } else if (country === 'Hungary') {
+          managers = ['Robert Szugyiczki'];
+    } else if (country === 'Turkey') {
+          managers = ['Nilufer Girgin'];
+    } else if (country === 'Czech Republic') {
+          managers = ['Milan Skolil'];
+    } else if (country === 'Slovakia') {
+          managers = ['Milon Micka'];
+    } else if (country === 'Romania') {
+          managers = ['Razvan Tesiu'];
     } else if (country === 'Germany') {
         if (greenlake) {
             if (
