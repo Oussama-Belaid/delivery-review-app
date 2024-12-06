@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delivery Manager Assignment</title>
     <style>
+        /* Same styles as before */
         body {
             font-family: Arial, sans-serif;
             background-color: #ffffff;
@@ -73,14 +74,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>DO Delivery Manager Assignment</h1>
-        <h2> Welcome, This tool is used to help identify the right delivery manager or contact person for each delivery review request</h2>
+        <h1>Early engagement & DO Delivery Manager Assignment</h1>
         <form id="assignmentForm">
-            <label for="account">Account</label>
-            <input type="text" id="account" name="account" required>
 
             <label for="country">Account Country</label>
             <select id="country" name="country" required>
+                <option value="" disabled selected>-- Select Country --</option>
                 <option value="Switzerland">Switzerland</option>
                 <option value="Austria">Austria</option>
                 <option value="Germany">Germany</option>
@@ -90,36 +89,37 @@
                 <option value="Czech Republic">Czech Republic</option>
                 <option value="Slovakia">Slovakia</option>
                 <option value="Romania">Romania</option>
-                
             </select>
 
-            <div class="radio-group">
-                <label>Greenlake / OS</label>
-                <div class="radio-options">
-                    <input type="radio" id="greenlakeYes" name="greenlake" value="yes" required>
-                    <label for="greenlakeYes">Yes</label>
-                    <input type="radio" id="greenlakeNo" name="greenlake" value="no" required>
-                    <label for="greenlakeNo">No</label>
+            <div id="radioFields" style="display: none;">
+                <div class="radio-group">
+                    <label>Greenlake / OS</label>
+                    <div class="radio-options">
+                        <input type="radio" id="greenlakeYes" name="greenlake" value="yes" required>
+                        <label for="greenlakeYes">Yes</label>
+                        <input type="radio" id="greenlakeNo" name="greenlake" value="no" required>
+                        <label for="greenlakeNo">No</label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="radio-group">
-                <label>Managed Services</label>
-                <div class="radio-options">
-                    <input type="radio" id="managedYes" name="managed" value="yes" required>
-                    <label for="managedYes">Yes</label>
-                    <input type="radio" id="managedNo" name="managed" value="no" required>
-                    <label for="managedNo">No</label>
+                <div class="radio-group">
+                    <label>Managed Services</label>
+                    <div class="radio-options">
+                        <input type="radio" id="managedYes" name="managed" value="yes" required>
+                        <label for="managedYes">Yes</label>
+                        <input type="radio" id="managedNo" name="managed" value="no" required>
+                        <label for="managedNo">No</label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="radio-group">
-                <label>A&PS</label>
-                <div class="radio-options">
-                    <input type="radio" id="apsYes" name="aps" value="yes" required>
-                    <label for="apsYes">Yes</label>
-                    <input type="radio" id="apsNo" name="aps" value="no" required>
-                    <label for="apsNo">No</label>
+                <div class="radio-group">
+                    <label>A&PS</label>
+                    <div class="radio-options">
+                        <input type="radio" id="apsYes" name="aps" value="yes" required>
+                        <label for="apsYes">Yes</label>
+                        <input type="radio" id="apsNo" name="aps" value="no" required>
+                        <label for="apsNo">No</label>
+                    </div>
                 </div>
             </div>
 
@@ -138,6 +138,26 @@
                 </div>
 
                 <div class="radio-group">
+                    <label>SAP Solution</label>
+                    <div class="radio-options">
+                        <input type="radio" id="sapyes" name="sap" value="yes">
+                        <label for="sapYes">Yes</label>
+                        <input type="radio" id="sapno" name="sap" value="no">
+                        <label for="sapNo">No</label>
+                    </div>
+                </div>
+
+                <div class="radio-group">
+                    <label>Only Colo or PM services</label>
+                    <div class="radio-options">
+                        <input type="radio" id="coloyes" name="colo" value="yes">
+                        <label for="coloYes">Yes</label>
+                        <input type="radio" id="colono" name="colo" value="no">
+                        <label for="coloNo">No</label>
+                    </div>
+                </div>
+
+                <div class="radio-group">
                     <label>Automotive segment?</label>
                     <div class="radio-options">
                         <input type="radio" id="automotiveYes" name="automotive" value="yes">
@@ -146,80 +166,61 @@
                         <label for="automotiveNo">No</label>
                     </div>
                 </div>
-
-                <div class="radio-group">
-                    <label>the deals contains SAP?</label>
-                    <div class="radio-options">
-                        <input type="radio" id="sapYes" name="sap" value="yes">
-                        <label for="sapYes">Yes</label>
-                        <input type="radio" id="sapNo" name="sap" value="no">
-                        <label for="sapNo">No</label>
-                    </div>
-                </div>
-
-                <div class="radio-group">
-                    <label>Pure Colocation or PM services?</label>
-                    <div class="radio-options">
-                        <input type="radio" id="coloYes" name="colo" value="yes">
-                        <label for="coloYes">Yes</label>
-                        <input type="radio" id="coloNo" name="colo" value="no">
-                        <label for="coloNo">No</label>
-                    </div>
-                </div>
             </div>
 
-            <button type="submit">Submit</button>
+            <button type="submit">Check</button>
+            <button type="reset">Clear</button>
         </form>
 
         <div id="result" class="result" style="display: none;"></div>
     </div>
 
     <script>
-
-function toggleGermanyFields() {
-        const country = document.getElementById('country').value;
-        const germanyFields = document.getElementById('germanyFields');
-
-        // Show or hide the fields based on the selected country
-        if (country === 'Germany') {
-            germanyFields.style.display = 'block';
-        } else {
+        // Function to toggle visibility of additional fields based on selected country
+        function toggleFields() {
+            const country = document.getElementById('country').value;
+            const germanyFields = document.getElementById('germanyFields');
+            const radioFields = document.getElementById('radioFields');
+        
+            // Default: hide all additional fields
+            radioFields.style.display = 'none';
             germanyFields.style.display = 'none';
+        
+            // Show service fields for Germany, Switzerland, and Austria
+            if (country === 'Germany' || country === 'Austria' || country === 'Switzerland') {
+                radioFields.style.display = 'block';
+                if (country === 'Germany') {
+                    germanyFields.style.display = 'block'; // Show Germany-specific fields
+                }
+            }
         }
-    }
-
-    // Add event listener to the country dropdown
-    document.getElementById('country').addEventListener('change', toggleGermanyFields);
-
-    // Initial check on page load
-    document.addEventListener('DOMContentLoaded', toggleGermanyFields);
-
-       document.getElementById('assignmentForm').addEventListener('submit', function (event) {
-    event.preventDefault();  // Prevent default form submission behavior
-
-    // Collect form data
-    const form = event.target;
-    const account = form.account.value.trim();
-    const country = form.country.value;
-    const greenlake = form.greenlake.value === 'yes';
-    const managed = form.managed.value === 'yes';
-    const aps = form.aps.value === 'yes';
-    const plz = form.plz.value ? parseInt(form.plz.value) : null;
-    const topAccount = form.topAccount?.value === 'yes';
-    const automotive = form.automotive?.value === 'yes';
-    const sap = form.sap?.value === 'yes';
-    const colo = form.colo?.value === 'yes';
-
-    // Validate that required fields are filled
-    if (!account) {
-        alert('Please enter an account name.');
-        return;
-    }
-
-    let managers = [];
-
-    // Logic for assigning managers based on country and form inputs
-    if (country === 'Switzerland') {
+        
+        // Add event listener for changes in the country dropdown
+        document.getElementById('country').addEventListener('change', toggleFields);
+        
+        // Initial check on page load
+        document.addEventListener('DOMContentLoaded', toggleFields);
+    
+        // Form submission handler
+        document.getElementById('assignmentForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+    
+            // Collect form data
+            const form = event.target;
+            const country = form.country.value;
+            const greenlake = form.greenlake?.value === 'yes';
+            const managed = form.managed?.value === 'yes';
+            const aps = form.aps?.value === 'yes';
+            const plz = form.plz.value ? parseInt(form.plz.value) : null;
+            const topAccount = form.topAccount?.value === 'yes';
+            const automotive = form.automotive?.value === 'yes';
+            const sap = form.sap?.value === 'yes';
+            const colo = form.colo?.value === 'yes';
+    
+            let managers = [];
+    
+            // Assignment logic
+            if (country === 'Switzerland') {
         if (greenlake) {
             managers = ['Stefan Gisler', 'Mario Grande'];
         } else if (aps) {
@@ -304,18 +305,14 @@ function toggleGermanyFields() {
             managers.push('Alina/Gerald');
         }
     }
-
-    // Display the result
-    const resultDiv = document.getElementById('result');
-    resultDiv.style.display = 'block';
-
-    if (managers.length > 0) {
-        resultDiv.innerHTML =
-            `<strong>Assigned Delivery Managers:</strong> ${managers.join(', ')}`;
-    } else {
-        resultDiv.innerHTML = 'No managers found for the provided details.';
-    }
-});
+            // Display results
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = managers.length > 0 
+                ? `<strong>Assigned Delivery Managers:</strong> ${managers.join(', ')}`
+                : 'No managers found for the provided details.';
+        });
     </script>
-</body>
+    </body>
 </html>
+
