@@ -124,6 +124,17 @@
             </div>
 
             <div id="germanyFields" style="display: none;">
+
+                <div id="tcvGroup" class="radio-group" style="display: none;">
+                    <label>TCV > 5 Mio?</label>
+                    <div class="radio-options">
+                        <input type="radio" id="tcvYes" name="tcv" value="yes">
+                        <label for="tcvYes">Yes</label>
+                        <input type="radio" id="tcvNo" name="tcv" value="no">
+                        <label for="tcvNo">No</label>
+                    </div>
+                </div>
+
                 <label for="plz">PLZ (shipping address)</label>
                 <input type="number" id="plz" name="plz">
 
@@ -137,24 +148,25 @@
                     </div>
                 </div>
 
-                <div class="radio-group">
-                    <label>SAP Solution</label>
-                    <div class="radio-options">
-                        <input type="radio" id="sapyes" name="sap" value="yes">
-                        <label for="sapYes">Yes</label>
-                        <input type="radio" id="sapno" name="sap" value="no">
-                        <label for="sapNo">No</label>
-                    </div>
-                </div>
-
-                <div class="radio-group">
-                    <label>Only Colo or PM services</label>
-                    <div class="radio-options">
-                        <input type="radio" id="coloyes" name="colo" value="yes">
-                        <label for="coloYes">Yes</label>
-                        <input type="radio" id="colono" name="colo" value="no">
-                        <label for="coloNo">No</label>
-                    </div>
+                <div id="topfields" style="display: none;">
+                    <label for="topcomp">Please select top account from the list below:</label>
+                    <select id="topcomp" name="topcomp">
+                        <option value="" disabled selected>-- Select Account --</option>
+                        <option value="Airbus">Airbus</option>
+                        <option value="BASF">BASF</option>
+                        <option value="BKA">BKA</option>
+                        <option value="BMW">BMW</option>
+                        <option value="BitBW">BitBW</option>
+                        <option value="Deutsche Bank">Deutsche Bank</option>
+                        <option value="Deutsche Börse">Deutsche Börse</option>
+                        <option value="Infosys/Daimler">Infosys/Daimler</option>
+                        <option value="SAP">SAP</option>
+                        <option value="Siemens">Siemens</option>
+                        <option value="Telefonica">Telefonica</option>
+                        <option value="Volkswagen">Volkswagen</option>
+                        <option value="Vodafone">Vodafone</option>
+                        <option value="Witron">Witron</option>
+                    </select>
                 </div>
 
                 <div class="radio-group">
@@ -166,6 +178,28 @@
                         <label for="automotiveNo">No</label>
                     </div>
                 </div>
+
+                <div class="radio-group">
+                    <label>SAP services?</label>
+                    <div class="radio-options">
+                        <input type="radio" id="sapYes" name="sap" value="yes" required>
+                        <label for="sapYes">Yes</label>
+                        <input type="radio" id="sapNo" name="sap" value="no" required>
+                        <label for="sapNo">No</label>
+                    </div>
+                </div>
+            
+                <!-- Colo Field -->
+                <div class="radio-group">
+                    <label>Only PM or only Colo?</label>
+                    <div class="radio-options">
+                        <input type="radio" id="coloYes" name="colo" value="yes" required>
+                        <label for="coloYes">Yes</label>
+                        <input type="radio" id="coloNo" name="colo" value="no" required>
+                        <label for="coloNo">No</label>
+                    </div>
+                </div>
+
             </div>
 
             <button type="submit">Check</button>
@@ -176,24 +210,66 @@
     </div>
 
     <script>
-        // Function to toggle visibility of additional fields based on selected country
-        function toggleFields() {
-            const country = document.getElementById('country').value;
-            const germanyFields = document.getElementById('germanyFields');
-            const radioFields = document.getElementById('radioFields');
-        
-            // Default: hide all additional fields
-            radioFields.style.display = 'none';
-            germanyFields.style.display = 'none';
-        
-            // Show service fields for Germany, Switzerland, and Austria
-            if (country === 'Germany' || country === 'Austria' || country === 'Switzerland') {
-                radioFields.style.display = 'block';
-                if (country === 'Germany') {
-                    germanyFields.style.display = 'block'; // Show Germany-specific fields
-                }
-            }
+     function toggleFields() {
+    const country = document.getElementById('country').value;
+    const germanyFields = document.getElementById('germanyFields');
+    const radioFields = document.getElementById('radioFields');
+    const topfields = document.getElementById('topfields');
+    const greenlakeInputs = document.getElementsByName('greenlake');
+    const managedInputs = document.getElementsByName('managed');
+    const apsInputs = document.getElementsByName('aps');
+    const sapInputs = document.getElementsByName('sap');
+    const coloInputs = document.getElementsByName('colo');
+    const tcvInputs = document.getElementsByName('tcv');
+
+    // Default: hide all additional fields
+    radioFields.style.display = 'none';
+    germanyFields.style.display = 'none';
+    topfields.style.display = 'none';
+   
+    // Remove the 'required' attribute from all radio inputs by default
+    [...greenlakeInputs, ...managedInputs, ...apsInputs, ...sapInputs, ...coloInputs, ...tcvInputs].forEach(input => input.required = false);
+
+    // Show service fields for Germany, Switzerland, and Austria
+    if (country === 'Germany' || country === 'Austria' || country === 'Switzerland') {
+        radioFields.style.display = 'block';
+
+        // Add 'required' attribute back for visible fields
+        greenlakeInputs.forEach(input => input.required = true);
+        managedInputs.forEach(input => input.required = true);
+        apsInputs.forEach(input => input.required = true);
+
+        if (country === 'Germany') {
+            germanyFields.style.display = 'block'; // Show Germany-specific fields
+            [...sapInputs, ...coloInputs].forEach(input => input.required = true);
         }
+    }
+
+    document.querySelectorAll('input[name="topAccount"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            if (radio.value === 'yes' && radio.checked) {
+                topfields.style.display = 'block'; // Show dropdown
+                document.getElementById('topcomp').required = true; // Make dropdown required
+            } else {
+                topfields.style.display = 'none'; // Hide dropdown
+                document.getElementById('topcomp').required = false; // Remove required attribute
+            }
+        });
+    });
+
+    document.querySelectorAll('input[name="aps"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            if (radio.value === 'yes' && radio.checked && country == 'Germany') {
+                tcvGroup.style.display = 'block'; // Show TCV group
+                tcvInputs.forEach(input => input.required = true); // Make TCV required
+            } else {
+                tcvGroup.style.display = 'none'; // Hide TCV group
+                tcvInputs.forEach(input => input.required = false); // Remove required attribute
+            }
+        });
+    });
+
+}
         
         // Add event listener for changes in the country dropdown
         document.getElementById('country').addEventListener('change', toggleFields);
@@ -203,9 +279,9 @@
     
         // Form submission handler
         document.getElementById('assignmentForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault(); 
     
-            // Collect form data
+            
             const form = event.target;
             const country = form.country.value;
             const greenlake = form.greenlake?.value === 'yes';
@@ -216,23 +292,24 @@
             const automotive = form.automotive?.value === 'yes';
             const sap = form.sap?.value === 'yes';
             const colo = form.colo?.value === 'yes';
+
+            console.log({
+                country,
+                greenlake,
+                managed,
+                aps,
+                plz,
+                topAccount,
+                automotive,
+                sap,
+                colo,
+            });
     
             let managers = [];
+            let earlyEngagementContact = []; 
     
             // Assignment logic
-            if (country === 'Switzerland') {
-        if (greenlake) {
-            managers = ['Stefan Gisler', 'Mario Grande'];
-        } else if (aps) {
-            managers = ['Ramtin Razzaghinejad'];
-        }
-    } else if (country === 'Austria') {
-        if (greenlake) {
-            managers = ['Rudolf Mueller', 'Ernst Krammer'];
-        } else if (aps) {
-            managers = ['Gerald Six'];
-        }
-    } else if (country === 'Poland') {
+            if (country === 'Poland') {
           managers = ['Izabella Skobudzinska'];
     } else if (country === 'Hungary') {
           managers = ['Robert Szugyiczki'];
@@ -244,6 +321,28 @@
           managers = ['Milon Micka'];
     } else if (country === 'Romania') {
           managers = ['Razvan Tesiu'];
+    } else if (country === 'Switzerland') {
+        if (greenlake) {
+            managers.push('Stefan Gisler', 'Mario Grande'); 
+        }  
+        if (aps) {
+            managers.push('Ramtin Razzaghinejad');
+        } 
+        if (managed) {
+            managers.push('ITOC');
+        } 
+
+    } else if (country === 'Austria') {
+        if (greenlake) {
+            managers.push('Rudolf Mueller', 'Ernst Krammer');
+        } 
+        if (aps) {
+            managers.push('Gerald Six');
+        }
+        if (managed) {
+            managers.push('ITOC');
+        } 
+
     } else if (country === 'Germany') {
         if (greenlake) {
             if (
@@ -268,7 +367,8 @@
             ) {
                 managers.push('Alexander Butter');
             }
-        } else if (aps) {
+        } 
+        if (aps) {
             if (
                 (plz >= 0 && plz <= 38999) ||
                 (plz >= 49000 && plz <= 49999) ||
@@ -292,6 +392,10 @@
                 managers.push('Patrick Neff');
             }
         }
+        
+        if (managed) {
+            managers.push('ITOC');
+        } 
         if (topAccount) {
             managers.push('Robbert Moeller');
         }
@@ -300,17 +404,51 @@
         }
         if (sap) {
             managers.push('Patrick Neff');
+            earlyEngagementContact.push('Patrick Neff');
         }
-        if (colo) {
-            managers.push('Alina/Gerald');
+        if ((colo && aps) || (tcv && aps)) {
+            if ((plz >= 0 && plz <= 38999) ||
+                (plz >= 49000 && plz <= 49999) ||
+                (plz >= 54000 && plz <= 56999) ||
+                (plz >= 60000 && plz <= 65999) ||
+                (plz >= 98000 && plz <= 99999) ||
+                (plz >= 40000 && plz <= 48999) ||
+                (plz >= 50000 && plz <= 53999) ||
+                (plz >= 57000 && plz <= 59999)) {
+                    earlyEngagementContact.push('Gerald');
+                } else if ((plz >= 66000 && plz <= 69999) ||
+                            (plz >= 70000 && plz <= 79999) ||
+                            (plz >= 80000 && plz <= 89999) ||
+                            (plz >= 90000 && plz <= 97999)) {
+                                earlyEngagementContact.push('Alina');
+                            }
         }
     }
+            
             // Display results
             const resultDiv = document.getElementById('result');
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = managers.length > 0 
-                ? `<strong>Assigned Delivery Managers:</strong> ${managers.join(', ')}`
-                : 'No managers found for the provided details.';
+
+            if (managers.length > 0 || earlyEngagementContact) {
+                let resultHTML = '';
+
+                // Add Assigned Delivery Managers if available
+                if (managers.length > 0) {
+                    resultHTML += `<strong>Delivery Managers:</strong> ${managers.join(', ')}<br>`;
+                } else {
+                    resultHTML += `<strong>Delivery Managers:</strong> No managers found for the provided details.<br>`;
+                }
+
+                // Add Early Engagement Contact if available
+                if (earlyEngagementContact.length>0) {
+                    resultHTML += `<strong>Early Engagement:</strong> ${earlyEngagementContact}<br>`;
+                }
+
+                resultDiv.innerHTML = resultHTML;
+            } else {
+                resultDiv.innerHTML = 'No relevant information found for the provided details.';
+            }
+
         });
     </script>
     </body>
