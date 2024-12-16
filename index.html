@@ -1,1 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Manager Assignment</title>
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #00b388;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .radio-group {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        .radio-group label {
+            display: inline;
+            margin-right: 15px;
+            font-weight: bold;
+            color: #555;
+        }
+        .radio-options label {
+            font-weight: normal;
+            margin: 0 10px 0 0;
+        }
+        button {
+            background-color: #00b388;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #007a5e;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #e0f7fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Early engagement & DO Delivery Manager Assignment</h1>
+        <form id="assignmentForm">
+
+            <label for="country">Account Country</label>
+            <select id="country" name="country" required>
+                <option value="" disabled selected>-- Select Country --</option>
+                <option value="Switzerland">Switzerland</option>
+                <option value="Austria">Austria</option>
+                <option value="Germany">Germany</option>
+                <option value="Poland">Poland</option>
+                <option value="Hungary">Hungary</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Czech Republic">Czech Republic</option>
+                <option value="Slovakia">Slovakia</option>
+                <option value="Romania">Romania</option>
+            </select>
+
+            <div id="radioFields" style="display: none;">
+                <div class="radio-group">
+                    <label>Greenlake / OS</label>
+                    <div class="radio-options">
+                        <input type="radio" id="greenlakeYes" name="greenlake" value="yes" required>
+                        <label for="greenlakeYes">Yes</label>
+                        <input type="radio" id="greenlakeNo" name="greenlake" value="no" required>
+                        <label for="greenlakeNo">No</label>
+                    </div>
+                </div>
+
+                <div class="radio-group">
+                    <label>Managed Services</label>
+                    <div class="radio-options">
+                        <input type="radio" id="managedYes" name="managed" value="yes" required>
+                        <label for="managedYes">Yes</label>
+                        <input type="radio" id="managedNo" name="managed" value="no" required>
+                        <label for="managedNo">No</label>
+                    </div>
+                </div>
+
+                <div class="radio-group">
+                    <label>A&PS</label>
+                    <div class="radio-options">
+                        <input type="radio" id="apsYes" name="aps" value="yes" required>
+                        <label for="apsYes">Yes</label>
+                        <input type="radio" id="apsNo" name="aps" value="no" required>
+                        <label for="apsNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="germanyFields" style="display: none;">
+
+                <div id="tcvGroup" class="radio-group" style="display: none;">
+                    <label>TCV > 5 Mio?</label>
+                    <div class="radio-options">
+                        <input type="radio" id="tcvYes" name="tcv" value="yes">
+                        <label for="tcvYes">Yes</label>
+                        <input type="radio" id="tcvNo" name="tcv" value="no">
+                        <label for="tcvNo">No</label>
+                    </div>
+                </div>
+
+                <label for="plz">PLZ (shipping address)</label>
+                <input type="number" id="plz" name="plz">
+
+                <div class="radio-group">
+                    <label>Top Account</label>
+                    <div class="radio-options">
+                        <input type="radio" id="topAccountYes" name="topAccount" value="yes">
+                        <label for="topAccountYes">Yes</label>
+                        <input type="radio" id="topAccountNo" name="topAccount" value="no">
+                        <label for="topAccountNo">No</label>
+                    </div>
+                </div>
+
+                <div id="topfields" style="display: none;">
+                    <label for="topcomp">Please select top account from the list below:</label>
+                    <select id="topcomp" name="topcomp">
+                        <option value="" disabled selected>-- Select Account --</option>
+                        <option value="Airbus">Airbus</option>
+                        <option value="BASF">BASF</option>
+                        <option value="BKA">BKA</option>
+                        <option value="BMW">BMW</option>
+                        <option value="BitBW">BitBW</option>
+                        <option value="Deutsche Bank">Deutsche Bank</option>
+                        <option value="Deutsche Börse">Deutsche Börse</option>
+                        <option value="Infosys/Daimler">Infosys/Daimler</option>
+                        <option value="SAP">SAP</option>
+                        <option value="Siemens">Siemens</option>
+                        <option value="Telefonica">Telefonica</option>
+                        <option value="Volkswagen">Volkswagen</option>
+                        <option value="Vodafone">Vodafone</option>
+                        <option value="Witron">Witron</option>
+                    </select>
+                </div>
+
+                <div class="radio-group">
+                    <label>Automotive segment?</label>
+                    <div class="radio-options">
+                        <input type="radio" id="automotiveYes" name="automotive" value="yes">
+                        <label for="automotiveYes">Yes</label>
+                        <input type="radio" id="automotiveNo" name="automotive" value="no">
+                        <label for="automotiveNo">No</label>
+                    </div>
+                </div>
+
+                <div class="radio-group">
+                    <label>SAP services?</label>
+                    <div class="radio-options">
+                        <input type="radio" id="sapYes" name="sap" value="yes" required>
+                        <label for="sapYes">Yes</label>
+                        <input type="radio" id="sapNo" name="sap" value="no" required>
+                        <label for="sapNo">No</label>
+                    </div>
+                </div>
+            
+
+                <div class="radio-group">
+                    <label>Only PM or only Colo?</label>
+                    <div class="radio-options">
+                        <input type="radio" id="coloYes" name="colo" value="yes" required>
+                        <label for="coloYes">Yes</label>
+                        <input type="radio" id="coloNo" name="colo" value="no" required>
+                        <label for="coloNo">No</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="submit">Check</button>
+            <button type="reset">Clear</button>
+        </form>
+
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+     function toggleFields() {
+    const country = document.getElementById('country').value;
+    const germanyFields = document.getElementById('germanyFields');
+    const radioFields = document.getElementById('radioFields');
+    const topfields = document.getElementById('topfields');
+    const greenlakeInputs = document.getElementsByName('greenlake');
+    const managedInputs = document.getElementsByName('managed');
+    const apsInputs = document.getElementsByName('aps');
+    const sapInputs = document.getElementsByName('sap');
+    const coloInputs = document.getElementsByName('colo');
+    const tcvInputs = document.getElementsByName('tcv');
+
+    radioFields.style.display = 'none';
+    germanyFields.style.display = 'none';
+    topfields.style.display = 'none';
+   
+    
+    [...greenlakeInputs, ...managedInputs, ...apsInputs, ...sapInputs, ...coloInputs, ...tcvInputs].forEach(input => input.required = false);
+
+    
+    if (country === 'Germany' || country === 'Austria' || country === 'Switzerland') {
+        radioFields.style.display = 'block';
+
+        
+        greenlakeInputs.forEach(input => input.required = true);
+        managedInputs.forEach(input => input.required = true);
+        apsInputs.forEach(input => input.required = true);
+
+        if (country === 'Germany') {
+            germanyFields.style.display = 'block'; 
+            [...sapInputs, ...coloInputs].forEach(input => input.required = true);
+        }
+    }
+
+    document.querySelectorAll('input[name="topAccount"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            if (radio.value === 'yes' && radio.checked) {
+                topfields.style.display = 'block'; 
+                document.getElementById('topcomp').required = true; 
+            } else {
+                topfields.style.display = 'none'; 
+                document.getElementById('topcomp').required = false; 
+            }
+        });
+    });
+
+    document.querySelectorAll('input[name="aps"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            if (radio.value === 'yes' && radio.checked && country == 'Germany') {
+                tcvGroup.style.display = 'block'; 
+                tcvInputs.forEach(input => input.required = true); 
+            } else {
+                tcvGroup.style.display = 'none'; 
+                tcvInputs.forEach(input => input.required = false); 
+            }
+        });
+    });
+
+}
+        
+        document.getElementById('country').addEventListener('change', toggleFields);
+        
+        document.addEventListener('DOMContentLoaded', toggleFields);
+    
+        document.getElementById('assignmentForm').addEventListener('submit', function (event) {
+            event.preventDefault(); 
+    
+            
+            const form = event.target;
+            const country = form.country.value;
+            const greenlake = form.greenlake?.value === 'yes';
+            const managed = form.managed?.value === 'yes';
+            const aps = form.aps?.value === 'yes';
+            const plz = form.plz.value ? parseInt(form.plz.value) : null;
+            const topAccount = form.topAccount?.value === 'yes';
+            const automotive = form.automotive?.value === 'yes';
+            const sap = form.sap?.value === 'yes';
+            const colo = form.colo?.value === 'yes';
+            const tcv = form.tcv?.value === 'yes';
+
+            console.log({
+                country,
+                greenlake,
+                managed,
+                aps,
+                plz,
+                topAccount,
+                automotive,
+                sap,
+                colo,
+                tcv,
+            });
+    
+            let glmanagers = [];
+            let apsmanagers = [];
+            let earlyEngagementContact = []; 
+    
+            
+            if (country === 'Poland') {
+          glmanagers = ['Izabella Skobudzinska'];
+          apsmanagers = ['Izabella Skobudzinska'];
+    } else if (country === 'Hungary') {
+          glmanagers = ['Robert Szugyiczki'];
+          apsmanagers = ['Robert Szugyiczki'];
+    } else if (country === 'Turkey') {
+          glmanagers = ['Nilufer Girgin'];
+          apsmanagers = ['Nilufer Girgin'];
+    } else if (country === 'Czech Republic') {
+          glmanagers = ['Milan Skolil'];
+          apsmanagers = ['Milan Skolil'];
+    } else if (country === 'Slovakia') {
+          glmanagers = ['Milon Micka'];
+          apsmanagers = ['Milon Micka'];
+    } else if (country === 'Romania') {
+          glmanagers = ['Razvan Tesiu'];
+          apsmanagers = ['Razvan Tesiu'];
+    } else if (country === 'Switzerland') {
+        if (greenlake) {
+            glmanagers.push('Stefan Gisler'); 
+        }  
+        if (aps) {
+            apsmanagers.push('Ramtin Razzaghinejad');
+        } 
+    } else if (country === 'Austria') {
+        if (greenlake) {
+            glmanagers.push('Ernst Krammer');
+        } 
+        if (aps) {
+            apsmanagers.push('Gerald Six');
+        }
+    } else if (country === 'Germany') {
+        if (greenlake) {
+            if (
+                (plz >= 0 && plz <= 38999) ||
+                (plz >= 49000 && plz <= 49999) ||
+                (plz >= 54000 && plz <= 56999) ||
+                (plz >= 60000 && plz <= 65999) ||
+                (plz >= 98000 && plz <= 99999)
+            ) {
+                glmanagers.push('Steffi Dollase');
+            } else if (
+                (plz >= 40000 && plz <= 48999) ||
+                (plz >= 50000 && plz <= 53999) ||
+                (plz >= 57000 && plz <= 59999)
+            ) {
+                glmanagers.push('Sabine Warta');
+            } else if (
+                (plz >= 66000 && plz <= 69999) ||
+                (plz >= 70000 && plz <= 79999) ||
+                (plz >= 80000 && plz <= 89999) ||
+                (plz >= 90000 && plz <= 97999)
+            ) {
+                glmanagers.push('Alexander Butter');
+            }
+        } 
+        if (aps) {
+            if (
+                (plz >= 0 && plz <= 38999) ||
+                (plz >= 49000 && plz <= 49999) ||
+                (plz >= 54000 && plz <= 56999) ||
+                (plz >= 60000 && plz <= 65999) ||
+                (plz >= 98000 && plz <= 99999)
+            ) {
+                apsmanagers.push('Markus Trojahn');
+            } else if (
+                (plz >= 40000 && plz <= 48999) ||
+                (plz >= 50000 && plz <= 53999) ||
+                (plz >= 57000 && plz <= 59999)
+            ) {
+                apsmanagers.push('Ina Heger');
+            } else if (
+                (plz >= 66000 && plz <= 69999) ||
+                (plz >= 70000 && plz <= 79999) ||
+                (plz >= 80000 && plz <= 89999) ||
+                (plz >= 90000 && plz <= 97999)
+            ) {
+                apsmanagers.push('Patrick Neff');
+            }
+        }
+        
+    
+        if (topAccount) {
+            glmanagers.push('Robert Moeller');
+        }
+        if (aps && automotive) {
+            apsmanagers.push('Markus Depolt');
+        }
+        if (sap) {
+            apsmanagers.push('Patrick Neff');
+        }
+        if ((tcv && managed && greenlake && aps)) {
+            if ((plz >= 0 && plz <= 38999) ||
+                (plz >= 49000 && plz <= 49999) ||
+                (plz >= 54000 && plz <= 56999) ||
+                (plz >= 60000 && plz <= 65999) ||
+                (plz >= 98000 && plz <= 99999) ||
+                (plz >= 40000 && plz <= 48999) ||
+                (plz >= 50000 && plz <= 53999) ||
+                (plz >= 57000 && plz <= 59999)) {
+                    earlyEngagementContact.push('Gerald Hammer');
+                } else if ((plz >= 66000 && plz <= 69999) ||
+                            (plz >= 70000 && plz <= 79999) ||
+                            (plz >= 80000 && plz <= 89999) ||
+                            (plz >= 90000 && plz <= 97999)) {
+                                earlyEngagementContact.push('Alina Necker');
+                            }
+        }
+    }
+            
+            
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+
+            if ((glmanagers.length > 0) || (apsmanagers.length > 0) || earlyEngagementContact) {
+                let resultHTML = '';
+
+                if (country === 'Germany') {
+                    resultHTML += `<strong>Account Country:</strong> Germany <br>`;
+                } else if (country === 'Switzerland') {
+                    resultHTML += `<strong>Account Country:</strong> Switzerland <br>`;
+                } else if (country === 'Austria') {
+                    resultHTML += `<strong>Account Country:</strong> Austria <br>`;
+                } else if (country === 'Hungary') {
+                    resultHTML += `<strong>Account Country:</strong> Hungary <br>`;
+                } else if (country === 'Poland') {
+                    resultHTML += `<strong>Account Country:</strong> Poland <br>`;
+                } else if (country === 'Turkey') {
+                    resultHTML += `<strong>Account Country:</strong> Turkey <br>`;
+                } else if (country === 'Romania') {
+                    resultHTML += `<strong>Account Country:</strong> Romania <br>`;
+                } else if (country === 'Czech Republic') {
+                    resultHTML += `<strong>Account Country:</strong> Czech Republic <br>`;
+                } else if (country === 'Slovakia') {
+                    resultHTML += `<strong>Account Country:</strong> Slovakia <br>`;
+                }
+
+                if (greenlake && aps && managed) {
+                    resultHTML += `<strong>Services:</strong> Greenlake & A&PS with Managed Services <br>`;
+                } else if (greenlake && aps) {
+                    resultHTML += `<strong>Services:</strong> Greenlake, A&PS <br>`;
+                } else if (greenlake && managed) {
+                    resultHTML += `<strong>Services:</strong> Greenlake with Managed Services <br>`;
+                } else if (aps && managed) {
+                    resultHTML += `<strong>Services:</strong> A&PS with Managed Services <br>`;
+                } else if (aps) {
+                    resultHTML += `<strong>Services:</strong> A&PS <br>`;
+                } else if (greenlake) {
+                    resultHTML += `<strong>Services:</strong> Greenlake <br>`;
+                } 
+
+
+
+                if ((glmanagers.length > 0) || (apsmanagers.length > 0)) {
+                    resultHTML += `<strong>Greenlake Delivery Managers:</strong> ${glmanagers.join(', ')}<br>
+                    <strong>A&PS Delivery Managers:</strong> ${apsmanagers.join(', ')}<br>`;
+                } else {
+                    resultHTML += `<strong>Delivery Managers:</strong> No managers found for the provided details.<br>`;
+                }
+
+                if (earlyEngagementContact.length>0) {
+                    resultHTML += `<strong>PM:</strong> ${earlyEngagementContact}<br>`;
+                }
+
+                resultDiv.innerHTML = resultHTML;
+            } else {
+                resultDiv.innerHTML = 'No relevant information found for the provided details.';
+            }
+
+        });
+    </script>
+    </body>
+</html>
 
