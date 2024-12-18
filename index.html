@@ -78,7 +78,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Delivery Manager Assignment for Early Engagement (EE) & Delivery Opinion (DO) </h1>
+        <h1>Delivery Manager Assignment for Early Engagement (EE) & Delivery Opinion (DO)</h1>
         <form id="assignmentForm">
 
             <label for="country">Account Country</label>
@@ -215,7 +215,7 @@
 
     <script>
 
-        document.getElementById('clearButton').addEventListener('click', function () {
+document.getElementById('clearButton').addEventListener('click', function () {
             document.getElementById('assignmentForm').reset();
             document.getElementById('result').style.display = 'none';
             toggleFields(); // Reset dynamic fields
@@ -298,7 +298,10 @@ function clearRadioButtons() {
     
         document.getElementById('assignmentForm').addEventListener('submit', function (event) {
             event.preventDefault(); 
+
+           
     
+            
             const form = event.target;
             const country = form.country.value;
             const greenlake = form.greenlake?.value === 'yes';
@@ -412,7 +415,7 @@ function clearRadioButtons() {
         }
         
     
-        if (topAccount && greenlake) {
+        if ((topAccount && greenlake) || (topAccount && aps)) {
             glmanagers = ['Robert Moeller'];
         }
         if (aps && automotive) {
