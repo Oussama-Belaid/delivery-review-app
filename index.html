@@ -215,6 +215,12 @@
 
     <script>
 
+        document.getElementById('clearButton').addEventListener('click', function () {
+            document.getElementById('assignmentForm').reset();
+            document.getElementById('result').style.display = 'none';
+            toggleFields(); // Reset dynamic fields
+        });
+
 function clearRadioButtons() {
             const radioFields = document.querySelectorAll('input[type="radio"]');
             radioFields.forEach(radio => radio.checked = false);
@@ -292,14 +298,7 @@ function clearRadioButtons() {
     
         document.getElementById('assignmentForm').addEventListener('submit', function (event) {
             event.preventDefault(); 
-
-            document.getElementById('clearButton').addEventListener('click', function () {
-            document.getElementById('assignmentForm').reset();
-            document.getElementById('result').style.display = 'none';
-            toggleFields(); // Reset dynamic fields
-        });
     
-            
             const form = event.target;
             const country = form.country.value;
             const greenlake = form.greenlake?.value === 'yes';
