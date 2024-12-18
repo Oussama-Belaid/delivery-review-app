@@ -210,6 +210,12 @@
     </div>
 
     <script>
+
+function clearRadioButtons() {
+            const radioFields = document.querySelectorAll('input[type="radio"]');
+            radioFields.forEach(radio => radio.checked = false);
+        }
+
      function toggleFields() {
     const country = document.getElementById('country').value;
     const germanyFields = document.getElementById('germanyFields');
@@ -222,6 +228,8 @@
     const coloInputs = document.getElementsByName('colo');
     const tcvInputs = document.getElementsByName('tcv');
 
+    clearRadioButtons();
+    document.getElementById('result').style.display = 'none';
     radioFields.style.display = 'none';
     germanyFields.style.display = 'none';
     topfields.style.display = 'none';
@@ -232,6 +240,7 @@
     
     if (country === 'Germany' || country === 'Austria' || country === 'Switzerland') {
         radioFields.style.display = 'block';
+        
 
         greenlakeInputs.forEach(input => input.required = true);
         managedInputs.forEach(input => input.required = true);
@@ -492,7 +501,6 @@
     </script>
     </body>
 </html>
-
 
 
 
