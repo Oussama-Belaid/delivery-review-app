@@ -203,7 +203,7 @@
             </div>
 
             <button type="submit">Check</button>
-            <button type="reset">Clear</button>
+            <button type="button" id="clearButton">Clear</button>
         </form>
 
         <div id="result" class="result" style="display: none;"></div>
@@ -233,7 +233,6 @@
     if (country === 'Germany' || country === 'Austria' || country === 'Switzerland') {
         radioFields.style.display = 'block';
 
-        
         greenlakeInputs.forEach(input => input.required = true);
         managedInputs.forEach(input => input.required = true);
         apsInputs.forEach(input => input.required = true);
@@ -243,6 +242,10 @@
             [...sapInputs, ...coloInputs].forEach(input => input.required = true);
         }
     }
+
+    if (country === '') { 
+    radioFields.style.display = 'none';
+}
 
     document.querySelectorAll('input[name="topAccount"]').forEach(radio => {
         radio.addEventListener('change', () => {
@@ -276,6 +279,12 @@
     
         document.getElementById('assignmentForm').addEventListener('submit', function (event) {
             event.preventDefault(); 
+
+            document.getElementById('clearButton').addEventListener('click', function () {
+            document.getElementById('assignmentForm').reset();
+            document.getElementById('result').style.display = 'none';
+            toggleFields(); // Reset dynamic fields
+        });
     
             
             const form = event.target;
@@ -483,4 +492,9 @@
     </script>
     </body>
 </html>
+
+
+
+
+
 
