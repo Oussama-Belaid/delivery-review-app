@@ -69,6 +69,10 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             background-color: #e0f7fa;
+            font-size: 16px; 
+            font-weight: 500; 
+            line-height: 1.8; 
+            color: #333; 
         }
     </style>
 </head>
@@ -409,16 +413,16 @@ function clearRadioButtons() {
         }
         
     
-        if (topAccount) {
-            glmanagers.push('Robert Moeller');
+        if (topAccount && greenlake) {
+            glmanagers = ['Robert Moeller'];
         }
         if (aps && automotive) {
-            apsmanagers.push('Markus Depolt');
+            apsmanagers = ['Markus Depolt'];
         }
-        if (sap) {
-            apsmanagers.push('Patrick Neff');
+        if (sap && aps && !automotive) {
+            apsmanagers = ['Patrick Neff'];
         }
-        if ((tcv && managed && greenlake && aps)) {
+        if ((colo && aps && !sap) || (aps && tcv && !sap) ) {
             if ((plz >= 0 && plz <= 38999) ||
                 (plz >= 49000 && plz <= 49999) ||
                 (plz >= 54000 && plz <= 56999) ||
@@ -427,12 +431,12 @@ function clearRadioButtons() {
                 (plz >= 40000 && plz <= 48999) ||
                 (plz >= 50000 && plz <= 53999) ||
                 (plz >= 57000 && plz <= 59999)) {
-                    earlyEngagementContact.push('Gerald Hammer');
+                    apsmanagers = ['Gerald Hammer'];
                 } else if ((plz >= 66000 && plz <= 69999) ||
                             (plz >= 70000 && plz <= 79999) ||
                             (plz >= 80000 && plz <= 89999) ||
                             (plz >= 90000 && plz <= 97999)) {
-                                earlyEngagementContact.push('Alina Necker');
+                                apsmanagers = ['Alina Necker'];
                             }
         }
     }
@@ -446,46 +450,48 @@ function clearRadioButtons() {
                 let resultHTML = '';
 
                 if (country === 'Germany') {
-                    resultHTML += `<strong>Account Country:</strong> Germany <br>`;
-                } else if (country === 'Switzerland') {
-                    resultHTML += `<strong>Account Country:</strong> Switzerland <br>`;
-                } else if (country === 'Austria') {
-                    resultHTML += `<strong>Account Country:</strong> Austria <br>`;
-                } else if (country === 'Hungary') {
-                    resultHTML += `<strong>Account Country:</strong> Hungary <br>`;
-                } else if (country === 'Poland') {
-                    resultHTML += `<strong>Account Country:</strong> Poland <br>`;
-                } else if (country === 'Turkey') {
-                    resultHTML += `<strong>Account Country:</strong> Turkey <br>`;
-                } else if (country === 'Romania') {
-                    resultHTML += `<strong>Account Country:</strong> Romania <br>`;
-                } else if (country === 'Czech Republic') {
-                    resultHTML += `<strong>Account Country:</strong> Czech Republic <br>`;
-                } else if (country === 'Slovakia') {
-                    resultHTML += `<strong>Account Country:</strong> Slovakia <br>`;
-                }
+        resultHTML += `Account Country: <strong>Germany</strong><br>`;
+    } else if (country === 'Switzerland') {
+        resultHTML += `Account Country: <strong>Switzerland</strong><br>`;
+    } else if (country === 'Austria') {
+        resultHTML += `Account Country: <strong>Austria</strong><br>`;
+    } else if (country === 'Hungary') {
+        resultHTML += `Account Country: <strong>Hungary</strong><br>`;
+    } else if (country === 'Poland') {
+        resultHTML += `Account Country: <strong>Poland</strong><br>`;
+    } else if (country === 'Turkey') {
+        resultHTML += `Account Country: <strong>Turkey</strong><br>`;
+    } else if (country === 'Romania') {
+        resultHTML += `Account Country: <strong>Romania</strong><br>`;
+    } else if (country === 'Czech Republic') {
+        resultHTML += `Account Country: <strong>Czech Republic</strong><br>`;
+    } else if (country === 'Slovakia') {
+        resultHTML += `Account Country: <strong>Slovakia</strong><br>`;
+    }
 
+    if (country === 'Germany') {
+        resultHTML += `Top Account: <strong>${topAccount ? 'Yes' : 'No'}</strong><br>`;
+    }
                 if (greenlake && aps && managed) {
-                    resultHTML += `<strong>Services:</strong> Greenlake & A&PS with Managed Services <br>`;
-                } else if (greenlake && aps) {
-                    resultHTML += `<strong>Services:</strong> Greenlake, A&PS <br>`;
-                } else if (greenlake && managed) {
-                    resultHTML += `<strong>Services:</strong> Greenlake with Managed Services <br>`;
-                } else if (aps && managed) {
-                    resultHTML += `<strong>Services:</strong> A&PS with Managed Services <br>`;
-                } else if (aps) {
-                    resultHTML += `<strong>Services:</strong> A&PS <br>`;
-                } else if (greenlake) {
-                    resultHTML += `<strong>Services:</strong> Greenlake <br>`;
-                } 
-
+        resultHTML += `Services: <strong>Greenlake & A&PS with Managed Services</strong><br>`;
+    } else if (greenlake && aps) {
+        resultHTML += `Services: <strong>Greenlake, A&PS</strong><br>`;
+    } else if (greenlake && managed) {
+        resultHTML += `Services: <strong>Greenlake with Managed Services</strong><br>`;
+    } else if (aps && managed) {
+        resultHTML += `Services: <strong>A&PS with Managed Services</strong><br>`;
+    } else if (aps) {
+        resultHTML += `Services: <strong>A&PS</strong><br>`;
+    } else if (greenlake) {
+        resultHTML += `Services: <strong>Greenlake</strong><br>`;
+    }
 
 
                 if ((glmanagers.length > 0) || (apsmanagers.length > 0)) {
-                    resultHTML += `<strong>Greenlake Delivery Manager(s):</strong> ${glmanagers.join(', ')}<br>
-                    <strong>A&PS Delivery Manager(s):</strong> ${apsmanagers.join(', ')}<br>`;
+                    resultHTML += `Greenlake Delivery Manager(s): <strong>${glmanagers.join(', ')}</strong><br>
+                    A&PS Delivery Manager(s): <strong>${apsmanagers.join(', ')}</strong><br>`;
                 } else {
-                    resultHTML += `<strong>Delivery Managers:</strong> No managers found for the provided details.<br>`;
+                    resultHTML += `Delivery Managers: <strong>No managers found for the provided details.</strong><br>`;
                 }
 
                 if (earlyEngagementContact.length>0) {
