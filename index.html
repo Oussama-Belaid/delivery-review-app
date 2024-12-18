@@ -327,8 +327,9 @@ function clearRadioButtons() {
                 tcv,
             });
     
-            let glmanagers = [];
-            let apsmanagers = [];
+            let glmanagers = ['n.a.'];
+            let apsmanagers = ['n.a.'];
+            let topmanager = ['n.a.'];
             let earlyEngagementContact = []; 
     
             
@@ -352,17 +353,17 @@ function clearRadioButtons() {
           apsmanagers = ['Razvan Tesiu'];
     } else if (country === 'Switzerland') {
         if (greenlake) {
-            glmanagers.push('Stefan Gisler'); 
+            glmanagers = ['Stefan Gisler']; 
         }  
         if (aps) {
-            apsmanagers.push('Ramtin Razzaghinejad');
+            apsmanagers = ['Ramtin Razzaghinejad'];
         } 
     } else if (country === 'Austria') {
         if (greenlake) {
-            glmanagers.push('Ernst Krammer');
+            glmanagers = ['Ernst Krammer'];
         } 
         if (aps) {
-            apsmanagers.push('Gerald Six');
+            apsmanagers = ['Gerald Six'];
         }
     } else if (country === 'Germany') {
         if (greenlake) {
@@ -373,20 +374,20 @@ function clearRadioButtons() {
                 (plz >= 60000 && plz <= 65999) ||
                 (plz >= 98000 && plz <= 99999)
             ) {
-                glmanagers.push('Steffi Dollase');
+                glmanagers=['Steffi Dollase'];
             } else if (
                 (plz >= 40000 && plz <= 48999) ||
                 (plz >= 50000 && plz <= 53999) ||
                 (plz >= 57000 && plz <= 59999)
             ) {
-                glmanagers.push('Sabine Warta');
+                glmanagers=['Sabine Warta'];
             } else if (
                 (plz >= 66000 && plz <= 69999) ||
                 (plz >= 70000 && plz <= 79999) ||
                 (plz >= 80000 && plz <= 89999) ||
                 (plz >= 90000 && plz <= 97999)
             ) {
-                glmanagers.push('Alexander Butter');
+                glmanagers=['Alexander Butter'];
             }
         } 
         if (aps) {
@@ -397,26 +398,26 @@ function clearRadioButtons() {
                 (plz >= 60000 && plz <= 65999) ||
                 (plz >= 98000 && plz <= 99999)
             ) {
-                apsmanagers.push('Markus Trojahn');
+                apsmanagers = ['Markus Trojahn'];
             } else if (
                 (plz >= 40000 && plz <= 48999) ||
                 (plz >= 50000 && plz <= 53999) ||
                 (plz >= 57000 && plz <= 59999)
             ) {
-                apsmanagers.push('Ina Heger');
+                apsmanagers = ['Ina Heger'];
             } else if (
                 (plz >= 66000 && plz <= 69999) ||
                 (plz >= 70000 && plz <= 79999) ||
                 (plz >= 80000 && plz <= 89999) ||
                 (plz >= 90000 && plz <= 97999)
             ) {
-                apsmanagers.push('Patrick Neff');
+                apsmanagers = ['Patrick Neff'];
             }
         }
         
     
         if ((topAccount && greenlake) || (topAccount && aps)) {
-            glmanagers = ['Robert Moeller'];
+            topmanager = ['Robert Moeller'];
         }
         if (aps && automotive) {
             apsmanagers = ['Markus Depolt'];
@@ -441,6 +442,7 @@ function clearRadioButtons() {
                                 apsmanagers = ['Alina Necker'];
                             }
         }
+      
     }
             
             
@@ -490,7 +492,8 @@ function clearRadioButtons() {
 
 
                 if ((glmanagers.length > 0) || (apsmanagers.length > 0)) {
-                    resultHTML += `Greenlake Delivery Manager(s): <strong>${glmanagers.join(', ')}</strong><br>
+                    resultHTML += `Top Account Manager: <strong>${topmanager.join(', ')}</strong><br>
+                    Greenlake Delivery Manager(s): <strong>${glmanagers.join(', ')}</strong><br>
                     A&PS Delivery Manager(s): <strong>${apsmanagers.join(', ')}</strong><br>`;
                 } else {
                     resultHTML += `Delivery Managers: <strong>No managers found for the provided details.</strong><br>`;
