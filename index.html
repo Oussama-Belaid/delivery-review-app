@@ -195,7 +195,7 @@
             
 
                 <div class="radio-group">
-                    <label>Only PM or only Colo?</label>
+                    <label>Mainly coordination project (mainly PM work)?</label>
                     <div class="radio-options">
                         <input type="radio" id="coloYes" name="colo" value="yes" required>
                         <label for="coloYes">Yes</label>
@@ -525,8 +525,8 @@ function clearRadioButtons() {
 
                 if ((glmanagers.length > 0) || (apsmanagers.length > 0)) {
                     resultHTML += `Top Account Manager: <strong>${topmanager.join(', ')}</strong><br>
-                    Greenlake Delivery Manager(s): <strong>${glmanagers.join(', ')}</strong><br>
-                    A&PS Delivery Manager(s): <strong>${apsmanagers.join(', ')}</strong><br>`;
+                    Greenlake & Managed Services Delivery Manager: <strong>${glmanagers.join(', ')}</strong><br>
+                    A&PS Delivery Manager: <strong>${apsmanagers.join(', ')}</strong><br>`;
                 } else {
                     resultHTML += `Delivery Managers: <strong>No managers found for the provided details.</strong><br>`;
                 }
