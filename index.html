@@ -358,12 +358,19 @@ function clearRadioButtons() {
         if (aps) {
             apsmanagers = ['Ramtin Razzaghinejad'];
         } 
+        if ((managed && !greenlake && !aps) || (managed && aps && !greenlake)) {
+            glmanagers = ['Stefan Gisler']
+        }
+
     } else if (country === 'Austria') {
         if (greenlake) {
             glmanagers = ['Ernst Krammer'];
         } 
         if (aps) {
             apsmanagers = ['Gerald Six'];
+        }
+        if ((managed && !greenlake && !aps) || (managed && aps && !greenlake)) {
+            glmanagers = ['Ernst Krammer'];
         }
     } else if (country === 'Germany') {
         if (greenlake) {
@@ -414,8 +421,31 @@ function clearRadioButtons() {
                 apsmanagers = ['Patrick Neff'];
             }
         }
-        
-    
+
+        if ((managed && !greenlake && !aps) || (managed && aps && !greenlake)) {
+            if (
+                (plz >= 0 && plz <= 38999) ||
+                (plz >= 49000 && plz <= 49999) ||
+                (plz >= 54000 && plz <= 56999) ||
+                (plz >= 60000 && plz <= 65999) ||
+                (plz >= 98000 && plz <= 99999)
+            ) {
+                glmanagers=['Steffi Dollase'];
+            } else if (
+                (plz >= 40000 && plz <= 48999) ||
+                (plz >= 50000 && plz <= 53999) ||
+                (plz >= 57000 && plz <= 59999)
+            ) {
+                glmanagers=['Sabine Warta'];
+            } else if (
+                (plz >= 66000 && plz <= 69999) ||
+                (plz >= 70000 && plz <= 79999) ||
+                (plz >= 80000 && plz <= 89999) ||
+                (plz >= 90000 && plz <= 97999)
+            ) {
+                glmanagers=['Alexander Butter'];
+            }
+        }
         if ((topAccount && greenlake) || (topAccount && aps)) {
             topmanager = ['Robert Moeller'];
         }
@@ -488,6 +518,8 @@ function clearRadioButtons() {
         resultHTML += `Services: <strong>A&PS</strong><br>`;
     } else if (greenlake) {
         resultHTML += `Services: <strong>Greenlake</strong><br>`;
+    } else if (managed) {
+        resultHTML += `Services: <strong>Managed Services</strong><br>`;
     }
 
 
